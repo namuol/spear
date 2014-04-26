@@ -13,9 +13,10 @@ module.exports = ->
   # This will set up graphics, sound, input, data, plugins, and start our game loop:
   cg.init
     name: 'Spear Game'
-    width: 1280
-    height: 720
-    backgroundColor: 0x222222
+    width: 400
+    height: 240
+    backgroundColor: 0x303c55
+    displayMode: 'pixelPerfect'
 
   loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen
   loadingScreen.begin()
