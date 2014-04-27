@@ -7,11 +7,15 @@ class Shadow extends cg.SpriteActor
 
   constructor: (properties) ->
     super properties
+    @body.gravityScale = 0
     @texture = 'shadow'
+    @addClass 'shadow'
     @height = 4
-    @width = 20
-    @body.v.x = cg.rand(30,60) * cg.rand([-1,1])
+    @width = 40
+    @body.v.x = cg.rand(30,90) * cg.rand([-1,1])
     @body.bounce = 1
+    @body.height = @height*2
+    @body.width = @width
 
   update: ->
     super

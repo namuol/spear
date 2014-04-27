@@ -4,7 +4,9 @@
     "spear": "assets/spear.png",
     "boat": "assets/boat.png",
     "shadow": "assets/shadow.png",
-    "crosshair": "assets/crosshair.png"
+    "crosshair": "assets/crosshair.png",
+    "displace": "assets/displace.png",
+    "person": "assets/person.png"
   },
   "sheets": {
   },
