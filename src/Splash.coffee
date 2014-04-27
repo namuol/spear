@@ -1,5 +1,6 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
+Fish = require 'Fish'
 
 class Splash extends cg.SpriteActor
   @plugin Physical
@@ -20,7 +21,15 @@ class Splash extends cg.SpriteActor
       @destroy()
   update: ->
     super
-    if shadow = @touches cg('shadow')
-      shadow.destroy()
+    fishes = []
+    for shadow in cg('shadow') by -1
+      if @touches shadow
+        shadow.destroy()
+        fishes.push new Fish
+
+    for fish,i in fishes
+      fish.x = ((@spear.width*.5)/fishes.length)*i
+      @spear.addChild fish
+      cg.log 'fish!' + i
 
 module.exports = Splash

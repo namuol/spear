@@ -2,6 +2,7 @@ cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
 Interactive = require 'plugins/ui/Interactive'
 
+
 class Shadow extends cg.SpriteActor
   @plugin Physical, Interactive
 
@@ -16,6 +17,7 @@ class Shadow extends cg.SpriteActor
     @body.bounce = 1
     @body.height = @height*2
     @body.width = @width
+    @alpha = 0.25
 
   update: ->
     super

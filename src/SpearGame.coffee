@@ -13,7 +13,14 @@ class SpearGame extends cg.Scene
       horiz: ['a/d', 'left/right']
       vert: ['w/s', 'up/down']
     @reset()
-
+    @_score = 0
+    @scoreText = @addChild new cg.Text '0',
+      font: 'font'
+  @defineProperty 'score',
+    get: -> @_score
+    set: (val) ->
+      @_score = val
+      @scoreText.string = '' + @_score
   reset: ->
     @removeChildren()  if @children.length > 0
 

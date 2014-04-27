@@ -36,6 +36,7 @@ class Spear extends cg.SpriteActor
         easeFunc: 'back.in'
       .then ->
         cg.stage.addChild new Splash
+          spear: @
           x: m.x
           y: m.y
         @tween
@@ -43,14 +44,13 @@ class Spear extends cg.SpriteActor
           values:
             anchorX: 0.5
             scaleX: 1
-            x: '-8'
           easeFunc: 'quad.out'
       .then ->
         # @destroy()
         @floating = true
         @floatY = @y
-        @body.width = @width
-        @body.height = @height*3
+        @body.width = 32
+        @body.height = 32
         @pivot.x = -@width/2
         @pivot.y = -@height/2
         marker.destroy()
@@ -69,6 +69,28 @@ class Spear extends cg.SpriteActor
       @y = @floatY + 3*Math.cos @t * 2
 
       if @touches @boat
-        @destroy()
+        @floating = false
+        @anchorX = 0.5
+        @anchorY = 0.5
+        @tween
+          duration: 200
+          values:
+            scaleX: 0
+            scaleY: 0
+            anchorX: 0.5
+            anchorY: 0.5
+            x: @boat.x
+            y: @boat.y
+          easeFunc: 'back.in'
+        .then ->
+          @destroy()
+        totScore = 0
+        for fish in @children
+          cg.log fish.score
+          totScore += fish.score
+        if totScore != 0
+          cg.log totScore
+          cg('#main').score += totScore
         ++@boat.spearCount
+
 module.exports = Spear
