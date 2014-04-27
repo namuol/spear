@@ -13,5 +13,6 @@
 - Ambient sound
 - Hit Sound
 - Miss Sound
+- Water Effects
 - "Nice Shot!", "Whoa!"
 - "intro"
