@@ -7,13 +7,8 @@ class Crosshair extends cg.SpriteActor
     @anchorX = 0.5
     @anchorY = 0.5
     @boat = cg('#boat')
-
   update: ->
     super
-    if @boat.spearCount > 0
-      @alpha = 1
-    else
-      @alpha = 0.5
     t = @boat.turbulence()
     m = (new cg.math.Vector2).set(@boat).add(@boat.vecToMouse())
     l = @boat.vecToMouse().len()

@@ -10,7 +10,7 @@ class Boat extends cg.Actor
 
   constructor: (properties) ->
     super properties
-    @spearCount = 3
+    @spearCount = 1
     @person = @addChild new cg.SpriteActor
       texture: 'person'
       x: 6

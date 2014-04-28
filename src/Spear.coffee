@@ -26,9 +26,10 @@ class Spear extends cg.SpriteActor
           y: 0.5
 
       marker.tween 'rotation', Math.PI * 2, 1000, 'linear'
-
+      dur = (@vecTo(m).len()/100) * 250
+      @delay dur*0.5, -> cg.sounds.shoot.play()
       @tween
-        duration: (@vecTo(m).len()/100) * 250
+        duration: dur
         values:
           x: m.x
           y: m.y
@@ -52,7 +53,7 @@ class Spear extends cg.SpriteActor
         @body.width = 32
         @body.height = 32
         @pivot.x = -@width/2
-        @pivot.y = -@height/2
+        @pivot.y = -@height
         marker.destroy()
     @t = 0
 
@@ -89,8 +90,19 @@ class Spear extends cg.SpriteActor
           cg.log fish.score
           totScore += fish.score
         if totScore != 0
-          cg.log totScore
-          cg('#main').score += totScore
+          mult = @children.length
+          cg('#main').score += totScore * mult
+
+          cg('#main').addChild(new cg.Text ''+totScore + 'x' + mult,
+            x: @boat.x
+            y: @boat.y - 20
+          ).delay 500, ->
+            @tween 'alpha', 0
+            .then ->
+              @destroy()
+
+        cg.sounds.pickup.play()
+
         ++@boat.spearCount
 
 module.exports = Spear

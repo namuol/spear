@@ -4,6 +4,7 @@ SCORE = [
   100  # bronze
   250  # silver
   1000 # gold
+  1000 # shark
 ]
 
 ODDS = [
@@ -15,13 +16,17 @@ ODDS = [
 class Fish extends cg.SpriteActor
   constructor: (properties) ->
     super properties
-    @type = cg.rand ODDS
-    @texture = cg.sheets.fish[@type]
     @anchorX = 0.5
     @anchorY = 0.5
+    if @shadow.isShark
+      @type = 3
+      @texture = 'shark'
+    else
+      @type = cg.rand ODDS
+      @texture = cg.sheets.fish[@type]
+    @score = SCORE[@type]
     @rotation = Math.PI/2 + cg.rand(-0.2,0.2)
     @flipX = cg.rand([true, false])
-    @score = SCORE[@type]
 
   update: ->
     super

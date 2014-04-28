@@ -25,7 +25,11 @@ class Splash extends cg.SpriteActor
     for shadow in cg('shadow') by -1
       if @touches shadow
         shadow.destroy()
+        shadow.fin?.destroy()
         fishes.push new Fish
+          shadow: shadow
+    if fishes.length > 0
+      cg.sounds.whoosh.play()
 
     for fish,i in fishes
       fish.x = ((@spear.width*.5)/fishes.length)*i
