@@ -10,6 +10,7 @@ class SpearGame extends cg.Scene
     super
     cg.rand.sow Date.now()
     cg.physics.gravity.zero()
+    cg.music.surf.loop()
     cg.physics.bounds.top = 55
     cg.Text.defaults.font = 'font'
 
@@ -83,5 +84,6 @@ class SpearGame extends cg.Scene
 
   update: ->
     super
+    cg.music.surf.volume = @boat?.turbulence()
 
 module.exports = SpearGame

@@ -25,6 +25,7 @@
     "warning": "assets/warning.*"
   },
   "music": {
+    "surf": "assets/surf.mp3"
   },
   "json": {
   }
