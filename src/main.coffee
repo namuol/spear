@@ -17,7 +17,6 @@ module.exports = ->
     height: 240
     backgroundColor: 0x303c55
     displayMode: 'pixelPerfect'
-
   loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen
   loadingScreen.begin()
 
@@ -34,6 +33,8 @@ module.exports = ->
             loadingScreen.destroy()
             cg.stage.addChild new SpearGame
               id: 'main'
+            cg.rand.sow Date.now()
+
     , 100
   , (err) ->
     throw new Error 'Failed to load assets.json: ' + err.message

@@ -39,6 +39,11 @@ class Boat extends cg.Actor
       # @targetDirection.y = val * 0.5
       @targetVelocity.y = val * @speed * 0.5
 
+    @mask = @addChild new cg.gfx.Graphics
+    @mask.beginFill()
+    @mask.drawRect(-10,-98,100,100)
+    @mask.endFill()
+
   turbulence: -> (@body.v.len()/DEFAULT_SPEED) + BASE_TURBULENCE
 
   update: ->
@@ -46,8 +51,12 @@ class Boat extends cg.Actor
     @body.v.$add(@targetVelocity.sub(@body.v).mul(0.02))
     @t += cg.dt_seconds + @turbulence() * 0.1
     @sprite.y = @turbulence() * 3 * Math.sin @t * 2
-    @person.y = @sprite.y + 6
+    @person.y = @sprite.y + 6 + 1.5*Math.sin (@t-100) * 2
     @sprite.rotation = 0.1 * Math.cos @t * 2
     @person.rotation = -0.2*(@body.v.x/DEFAULT_SPEED) + 0.1 * Math.cos @t * 2.1
+    if @vecToMouse().x > 0
+      @person.flipX = true
+    else
+      @person.flipX = false
 
 module.exports = Boat

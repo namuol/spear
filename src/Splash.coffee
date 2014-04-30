@@ -33,6 +33,14 @@ class Splash extends cg.SpriteActor
 
     for fish,i in fishes
       fish.x = ((@spear.width*.5)/fishes.length)*i
+      fish.scaleX = fish.scaleY = 0
+      fish.tween
+        values:
+          scaleX: 1
+          scaleY: 1
+        delay: i*50
+        easeFunc: 'elastic.out'
+      fish.delay i*50, -> cg.sounds.pickup.play()
       @spear.addChild fish
       cg.log 'fish!' + i
 

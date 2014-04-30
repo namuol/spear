@@ -8,7 +8,6 @@ GameOver = require 'GameOver'
 class SpearGame extends cg.Scene
   constructor: ->
     super
-    cg.rand.sow Date.now()
     cg.physics.gravity.zero()
     cg.music.surf.loop()
     cg.physics.bounds.top = 55
@@ -76,8 +75,8 @@ class SpearGame extends cg.Scene
 
       @boat = @addChild new Boat
         id: 'boat'
-        x: 50
-        y: cg.height - 40
+        x: cg.rand cg.width
+        y: cg.rand cg.height
       @crosshair = @addChild new Crosshair
         id: 'crosshair'
     return @

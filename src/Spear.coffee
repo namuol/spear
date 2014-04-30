@@ -64,7 +64,7 @@ class Spear extends cg.SpriteActor
       @rotation = @vecTo(@crosshair).angle()
       @scale.x = 0.6666 + 0.3333 * Math.abs Math.cos @rotation
       @x = @boat.x + 6
-      @y = @boat.y - 9 + @boat.sprite.y
+      @y = @boat.y - 15 + @boat.person.y
     else if @floating
       @rotation = 0.1 * Math.sin @t * 2
       @y = @floatY + 3*Math.cos @t * 2
