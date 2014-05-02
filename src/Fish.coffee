@@ -13,7 +13,7 @@ ODDS = [
   2
 ]
 
-class Fish extends cg.SpriteActor
+class Fish extends cg.Actor
   constructor: (properties) ->
     super properties
     @anchorX = 0.5

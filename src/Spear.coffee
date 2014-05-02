@@ -2,11 +2,11 @@ cg = require 'cg'
 Splash = require 'Splash'
 Physical = require 'plugins/physics/Physical'
 
-class Spear extends cg.SpriteActor
+class Spear extends cg.Actor
   @plugin Physical
+  texture: 'spear'
   constructor: (properties) ->
     super properties
-    @texture = 'spear'
     @anchor.x = 0.5
     @anchor.y = 0.5
     @aiming = true
@@ -17,7 +17,7 @@ class Spear extends cg.SpriteActor
     @once cg.input, 'mouseUp', ->
       m = (new cg.math.Vector2).set(@crosshair)
       @aiming = false
-      marker = cg('#main').addChild new cg.SpriteActor
+      marker = cg('#main').addChild new cg.Actor
         texture: 'crosshair'
         x: @crosshair.x
         y: @crosshair.y
@@ -26,6 +26,7 @@ class Spear extends cg.SpriteActor
           y: 0.5
 
       marker.tween 'rotation', Math.PI * 2, 1000, 'linear'
+      @boat.body.v.$add(@vecTo(m).mag(-45))
       dur = (@vecTo(m).len()/100) * 250
       @delay dur*0.5, -> cg.sounds.shoot.play()
       @tween

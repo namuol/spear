@@ -4,7 +4,7 @@ Shark = require 'Shark'
 
 SHARK_RATE = 0.2
 
-class Shadow extends cg.SpriteActor
+class Shadow extends cg.Actor
   @plugin Physical
 
   constructor: (properties) ->

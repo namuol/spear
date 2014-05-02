@@ -12,7 +12,7 @@ class Boat extends cg.Actor
     super properties
     @spearCount = 1
 
-    @shadow = @addChild new cg.SpriteActor
+    @shadow = @addChild new cg.Actor
       texture: 'shadow'
       x: -7
       y: 1
@@ -20,13 +20,13 @@ class Boat extends cg.Actor
       height: 2
       alpha: 0.4
 
-    @person = @addChild new cg.SpriteActor
+    @person = @addChild new cg.Actor
       texture: 'person'
       x: 6
       anchor:
         x: 0.5
         y: 1
-    @sprite = @addChild new cg.SpriteActor
+    @sprite = @addChild new cg.Actor
       texture: 'boat'
       anchor:
         x: 0.5

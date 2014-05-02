@@ -2,7 +2,7 @@ cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
 Fish = require 'Fish'
 
-class Splash extends cg.SpriteActor
+class Splash extends cg.Actor
   @plugin Physical
 
   constructor: (properties) ->
@@ -28,8 +28,6 @@ class Splash extends cg.SpriteActor
         shadow.fin?.destroy()
         fishes.push new Fish
           shadow: shadow
-    if fishes.length > 0
-      cg.sounds.whoosh.play()
 
     for fish,i in fishes
       fish.x = ((@spear.width*.5)/fishes.length)*i
@@ -38,9 +36,9 @@ class Splash extends cg.SpriteActor
         values:
           scaleX: 1
           scaleY: 1
-        delay: i*50
+        delay: i*80
         easeFunc: 'elastic.out'
-      fish.delay i*50, -> cg.sounds.pickup.play()
+      fish.delay i*80, -> cg.sounds.whoosh.play()
       @spear.addChild fish
       cg.log 'fish!' + i
 

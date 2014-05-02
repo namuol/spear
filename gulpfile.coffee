@@ -38,7 +38,7 @@ createBundler = (_browserify) ->
   b = _browserify
     extensions: ['.coffee']
     paths: [
-      path.join __dirname, 'node_modules/combo/src/combo'
+      path.join __dirname, 'node_modules/combo/src'
       path.join __dirname, 'src'
     ]
 

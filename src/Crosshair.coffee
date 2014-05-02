@@ -1,6 +1,6 @@
 cg = require 'cg'
 
-class Crosshair extends cg.SpriteActor
+class Crosshair extends cg.Actor
   constructor: (properties) ->
     super properties
     @texture = 'crosshair'

@@ -58,7 +58,7 @@ class SpearGame extends cg.Scene
 
     @delay 0, ->
 
-      @addChild new cg.SpriteActor
+      @addChild new cg.Actor
         texture: 'bg'
       @scoreText = @addChild new cg.Text '0',
         font: 'font'

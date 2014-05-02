@@ -6,7 +6,7 @@ STALK_DIST2 = STALK_DIST*STALK_DIST
 
 DEFAULT_SPEED = 60
 
-class Shark extends cg.SpriteActor
+class Shark extends cg.Actor
   @plugin Physical
 
   constructor: (properties) ->

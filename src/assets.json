@@ -17,7 +17,7 @@
     "font": "assets/font.png"
   },
   "sounds": {
-    "whoosh": "assets/whoosh.*",
+    "whoosh": "assets/whoosh.wav",
     "draw": "assets/draw.*",
     "dead": "assets/dead0.*",
     "shoot": "assets/shoot.*",
