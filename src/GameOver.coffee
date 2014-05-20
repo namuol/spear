@@ -1,18 +1,19 @@
 cg = require 'cg'
 
 class GameOver extends cg.Scene
-  constructor: (properties) ->
-    super properties
+  init: ->
     @bg = @addChild(new cg.gfx.Graphics)
     @bg.clear()
-    @bg.beginFill 0x000000, 0.5
+    @bg.beginFill 0x000000, 0.8
     @bg.drawRect 0, 0, cg.width, cg.height
     @bg.endFill()
     @gameOverText = @addChild(new cg.Text("GAME OVER",
       align: "center"
       x: cg.width / 2
       y: 20
-      scale: 2
+      scale:
+        x: 2
+        y: 2
     ))
     @scoreText = @addChild(new cg.Text("high score: 0\nyour score: 0",
       align: "center"
@@ -31,7 +32,7 @@ class GameOver extends cg.Scene
     @scoreText.string = "high score: " + cg("#main").highScore + "\n" + "your score: " + cg("#main").score
     @gameOverText.bottom = 0
     @gameOverText.tween "bottom", @scoreText.top - 10, 1000, "bounce.out"
-    
+
     # We add a small delay here to prevent the player from accidentally
     #  restarting before they have a chance to review their score.
     @delay 500, ->
@@ -44,7 +45,7 @@ class GameOver extends cg.Scene
   splashOut: ->
     @emit "done"
     @pause().hide()
-    cg('#main').resume()
+    cg('#main').resetGame().resume()
     return
 
   module.exports = GameOver

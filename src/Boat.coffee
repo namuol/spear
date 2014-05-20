@@ -1,15 +1,13 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
-Interactive = require 'plugins/ui/Interactive'
 Spear = require 'Spear'
 
 DEFAULT_SPEED = 100
 BASE_TURBULENCE = 0.1
 class Boat extends cg.Actor
-  @plugin Physical, Interactive
+  @plugin Physical
 
-  constructor: (properties) ->
-    super properties
+  init: ->
     @spearCount = 1
 
     @shadow = @addChild new cg.Actor
@@ -26,6 +24,7 @@ class Boat extends cg.Actor
       anchor:
         x: 0.5
         y: 1
+
     @sprite = @addChild new cg.Actor
       texture: 'boat'
       anchor:
@@ -36,6 +35,7 @@ class Boat extends cg.Actor
     @sprite.y = @sprite.height/4
     @body.width = @sprite.width/2
     @body.height = @sprite.height/2
+    @body.offset.y -= 8
     @t = 0
     @controls = cg.input.controls.boat
 
@@ -57,7 +57,6 @@ class Boat extends cg.Actor
   turbulence: -> (@body.v.len()/DEFAULT_SPEED) + BASE_TURBULENCE
 
   update: ->
-    super
     @body.v.$add(@targetVelocity.sub(@body.v).mul(0.02))
     @t += cg.dt_seconds + @turbulence() * 0.1
     @sprite.y = @turbulence() * 3 * Math.sin @t * 2

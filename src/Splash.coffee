@@ -3,11 +3,7 @@ Physical = require 'plugins/physics/Physical'
 Fish = require 'Fish'
 
 class Splash extends cg.Actor
-  @plugin Physical
-
-  constructor: (properties) ->
-    super properties
-    @texture = 'splash'
+  init: ->
     @width = 10
     @height = 10
     @alpha = 1
@@ -20,7 +16,6 @@ class Splash extends cg.Actor
     @delay 20, ->
       @destroy()
   update: ->
-    super
     fishes = []
     for shadow in cg('shadow') by -1
       if @touches shadow
@@ -41,5 +36,7 @@ class Splash extends cg.Actor
       fish.delay i*80, -> cg.sounds.whoosh.play()
       @spear.addChild fish
       cg.log 'fish!' + i
+
+Splash.plugin Physical
 
 module.exports = Splash

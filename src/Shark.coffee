@@ -9,8 +9,7 @@ DEFAULT_SPEED = 60
 class Shark extends cg.Actor
   @plugin Physical
 
-  constructor: (properties) ->
-    super properties
+  init: ->
     @texture = 'fin'
     @anchorX = 0.5
     @anchorY = 0
@@ -18,7 +17,6 @@ class Shark extends cg.Actor
     @speed = DEFAULT_SPEED
 
   update: ->
-    super
     @x = @shadow.x + @shadow.width/2
     @y = @shadow.y + 3
 
@@ -43,7 +41,7 @@ class Shark extends cg.Actor
     if @shadow.touches boat
       cg('#gameOver').splash()
       cg.sounds.dead.play()
-      cg('#main').resetGame()
+      cg.music.surf.fadeTo 0
       cg('#main').pause()
 
 module.exports = Shark

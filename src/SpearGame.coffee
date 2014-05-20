@@ -6,8 +6,7 @@ Crosshair = require 'Crosshair'
 GameOver = require 'GameOver'
 
 class SpearGame extends cg.Scene
-  constructor: ->
-    super
+  init: ->
     cg.physics.gravity.zero()
     cg.music.surf.loop()
     cg.physics.bounds.top = 55
@@ -32,16 +31,10 @@ class SpearGame extends cg.Scene
         @addChild new Spear
         --@boat.spearCount
 
-    @delay 0, ->
-      @gameOver = cg.stage.addChild new GameOver
-        id: 'gameOver'
+    @on cg.input, 'keyDown:0', ->
+      cg.physics.toggleDebugVisuals()
 
-      @on @gameOver, 'done', ->
-        @resume()
-        @resetGame()
-        @show()
-
-      @gameOver.pause().hide()
+    @t = 0
 
   @defineProperty 'score',
     get: -> @_score
@@ -55,34 +48,32 @@ class SpearGame extends cg.Scene
     for c in @children
       c.destroy()
 
+    @addChild new cg.Actor
+      texture: 'bg'
+    @scoreText = @addChild new cg.Text '0',
+      font: 'font'
+      x: 4
+      y: 4
+    @score = 0
 
-    @delay 0, ->
+    @targetFishCount = 40
+    @water = @addChild new cg.Actor
+    @water.width = cg.width
+    @water.height = cg.height
+    # @water.filters = [new cg.gfx.BlurFilter]
 
-      @addChild new cg.Actor
-        texture: 'bg'
-      @scoreText = @addChild new cg.Text '0',
-        font: 'font'
-        x: 4
-        y: 4
-      @score = 0
+    @boat = @addChild new Boat
+      id: 'boat'
+      x: cg.rand cg.width
+      y: cg.rand cg.height
 
-      @on cg.input, 'keyDown:0', ->
-        cg.physics.toggleDebugVisuals()
+    @crosshair = @addChild new Crosshair
+      id: 'crosshair'
 
-      @targetFishCount = 40
-
-      @water = @addChild new cg.Actor
-
-      @boat = @addChild new Boat
-        id: 'boat'
-        x: cg.rand cg.width
-        y: cg.rand cg.height
-      @crosshair = @addChild new Crosshair
-        id: 'crosshair'
     return @
 
   update: ->
-    super
-    cg.music.surf.volume = @boat?.turbulence()
+    console.log 'wat'
+    cg.music.surf.volume = @boat?.turbulence() ? 0
 
 module.exports = SpearGame

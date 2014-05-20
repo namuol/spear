@@ -7,8 +7,7 @@ SHARK_RATE = 0.2
 class Shadow extends cg.Actor
   @plugin Physical
 
-  constructor: (properties) ->
-    super properties
+  init: ->
     @body.gravityScale = 0
     @texture = 'shadow'
     @addClass 'shadow'
@@ -37,6 +36,5 @@ class Shadow extends cg.Actor
     @fin?.destroy()
 
   update: ->
-    super
 
 module.exports = Shadow

@@ -1,14 +1,12 @@
 cg = require 'cg'
 
 class Crosshair extends cg.Actor
-  constructor: (properties) ->
-    super properties
+  init: ->
     @texture = 'crosshair'
     @anchorX = 0.5
     @anchorY = 0.5
     @boat = cg('#boat')
   update: ->
-    super
     t = @boat.turbulence()
     m = (new cg.math.Vector2).set(@boat).add(@boat.vecToMouse())
     l = @boat.vecToMouse().len()

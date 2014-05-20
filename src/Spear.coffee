@@ -3,16 +3,16 @@ Splash = require 'Splash'
 Physical = require 'plugins/physics/Physical'
 
 class Spear extends cg.Actor
-  @plugin Physical
   texture: 'spear'
-  constructor: (properties) ->
-    super properties
+  init: ->
     @anchor.x = 0.5
     @anchor.y = 0.5
     @aiming = true
     @addClass 'spear'
     @crosshair = cg('#crosshair')
     @boat = cg('#boat')
+    @body.offset.x = -@width/2
+    @body.offset.y = -@height/2
 
     @once cg.input, 'mouseUp', ->
       m = (new cg.math.Vector2).set(@crosshair)
@@ -53,13 +53,13 @@ class Spear extends cg.Actor
         @floatY = @y
         @body.width = 32
         @body.height = 32
-        @pivot.x = -@width/2
-        @pivot.y = -@height
+        @body.offset.x = -16
+        @body.offset.y = -16
+
         marker.destroy()
     @t = 0
 
   update: ->
-    super
     @t += cg.dt_seconds
     if @aiming
       @rotation = @vecTo(@crosshair).angle()
@@ -105,5 +105,7 @@ class Spear extends cg.Actor
         cg.sounds.pickup.play()
 
         ++@boat.spearCount
+
+Spear.plugin Physical
 
 module.exports = Spear

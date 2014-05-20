@@ -14,8 +14,7 @@ ODDS = [
 ]
 
 class Fish extends cg.Actor
-  constructor: (properties) ->
-    super properties
+  init: ->
     @anchorX = 0.5
     @anchorY = 0.5
     if @shadow.isShark
@@ -29,6 +28,5 @@ class Fish extends cg.Actor
     @flipX = cg.rand([true, false])
 
   update: ->
-    super
 
 module.exports = Fish
