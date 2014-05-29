@@ -37,7 +37,7 @@ class Spear extends cg.Actor
           anchorX: 1
         easeFunc: 'back.in'
       .then ->
-        cg.stage.addChild new Splash
+        cg('#main').addChild new Splash
           spear: @
           x: m.x
           y: m.y
@@ -88,7 +88,6 @@ class Spear extends cg.Actor
           @destroy()
         totScore = 0
         for fish in @children
-          cg.log fish.score
           totScore += fish.score
         if totScore != 0
           mult = @children.length
@@ -96,11 +95,26 @@ class Spear extends cg.Actor
 
           cg('#main').addChild(new cg.Text ''+totScore + 'x' + mult,
             x: @boat.x
-            y: @boat.y - 20
-          ).delay 500, ->
-            @tween 'alpha', 0
-            .then ->
-              @destroy()
+            y: @boat.y
+            align: 'center'
+            alpha: 0
+            scale:
+              x: 0
+              y: 0
+          ).tween
+            values:
+              y: '-20'
+              alpha: 1
+              'scale.x': 1
+              'scale.y': 1
+            duration: 500
+            easeFunc: 'elastic.out'
+          .then ->
+            @delay 750
+          .then ->
+            @hide 500
+          .then ->
+            @destroy()
 
         cg.sounds.pickup.play()
 

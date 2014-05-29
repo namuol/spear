@@ -8,7 +8,6 @@ GameOver = require 'GameOver'
 class SpearGame extends cg.Scene
   init: ->
     cg.physics.gravity.zero()
-    cg.music.surf.loop()
     cg.physics.bounds.top = 55
     cg.Text.defaults.font = 'font'
 
@@ -36,6 +35,8 @@ class SpearGame extends cg.Scene
 
     @t = 0
 
+    @tween cg, 'width', cg.width * 2
+
   @defineProperty 'score',
     get: -> @_score
     set: (val) ->
@@ -48,19 +49,21 @@ class SpearGame extends cg.Scene
     for c in @children
       c.destroy()
 
-    @addChild new cg.Actor
+
+    @targetFishCount = 40
+    @water = @addChild new cg.Actor
+      id: 'water'
       texture: 'bg'
+    @water.width = cg.width
+    @water.height = cg.height
+    # @displacement = new cg.gfx.DisplacementFilter(cg.textures.displace)
+    # @water.filters = [@displacement]
+
     @scoreText = @addChild new cg.Text '0',
       font: 'font'
       x: 4
       y: 4
     @score = 0
-
-    @targetFishCount = 40
-    @water = @addChild new cg.Actor
-    @water.width = cg.width
-    @water.height = cg.height
-    # @water.filters = [new cg.gfx.BlurFilter]
 
     @boat = @addChild new Boat
       id: 'boat'
@@ -70,10 +73,13 @@ class SpearGame extends cg.Scene
     @crosshair = @addChild new Crosshair
       id: 'crosshair'
 
+    cg.music.surf.stop().loop()
+
     return @
 
   update: ->
-    console.log 'wat'
     cg.music.surf.volume = @boat?.turbulence() ? 0
+    # @displacement.offset.x += 0.3
+    # @displacement.offset.y += 0.1
 
 module.exports = SpearGame

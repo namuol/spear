@@ -19,11 +19,7 @@ module.exports = ->
     height: 240
     backgroundColor: 0x303c55
     textureFilter: 'nearest'
-    # displayMode: 'pixelPerfect'
-
-  cg.on 'blur', ->
-    cg.sound.sfxVolume = 0
-    cg.sound.musicVolume = 0
+    # displayMode: 'pixel'
 
   loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen
   loadingScreen.begin()
@@ -38,12 +34,36 @@ module.exports = ->
         loadingScreen.destroy()
         cg.stage.addChild new SpearGame
           id: 'main'
+          interactive: true
+          buttonMode: true
+          defaultCursor: 'none'
 
         gameOver = cg.stage.addChild new GameOver
           id: 'gameOver'
         gameOver.pause().hide()
 
-        cg.rand.sow Date.now()
+        cg.stage.addChild new cg.extras.PauseScreen
+          id: 'pauseScreen'
+        cg('#pauseScreen').hide()
+
+        pause = ->
+          cg.log 'PAUSE'
+          cg.sound.pauseAll()
+          cg('#main').pause()
+          cg('#gameOver').pause()
+          cg('#pauseScreen').show()
+
+        cg.on 'blur', pause
+
+        cg('#pauseScreen').on 'dismiss', ->
+          if cg('#gameOver').visible
+            cg('#gameOver').resume()
+          else
+            cg('#main').resume()
+          cg.sound.resumeAll()
+
+        pause()
+
   # Hide the pre-pre loading "Please Wait..." message:
   document.getElementById('pleasewait').style.display = 'none'
 

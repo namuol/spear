@@ -27,14 +27,14 @@ class Shadow extends cg.Actor
     @tween 'alpha', 0.25
 
     @isShark = cg.rand() < SHARK_RATE
+
     if @isShark
       @fin = cg('#main').addChild new Shark
         shadow: @
 
+
   destroy: ->
     super
     @fin?.destroy()
-
-  update: ->
 
 module.exports = Shadow

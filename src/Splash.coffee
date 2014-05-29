@@ -35,7 +35,6 @@ class Splash extends cg.Actor
         easeFunc: 'elastic.out'
       fish.delay i*80, -> cg.sounds.whoosh.play()
       @spear.addChild fish
-      cg.log 'fish!' + i
 
 Splash.plugin Physical
 

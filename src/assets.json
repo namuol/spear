@@ -22,7 +22,8 @@
     "dead": "assets/dead0.*",
     "shoot": "assets/shoot.*",
     "pickup": "assets/pickup.*",
-    "warning": "assets/warning.*"
+    "warning": "assets/warning.*",
+    "surf": "assets/surf.mp3"
   },
   "music": {
     "surf": "assets/surf.mp3"

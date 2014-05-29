@@ -81,10 +81,13 @@ gulp.task 'watch', ->
   b = createBundler watchify
   b.on 'update', ->
     bundle b, true
+    for a in arguments
+      console.log a
   bundle b, true
 
   # Assets:
   gulp.watch paths.images, {}, (event) ->
+    console.log 'RELOAD IMAGE: ', event.path, event.type
     setTimeout ->
       livereload.reloadImage event.path.replace __dirname + '/src/', ''
     , 500
@@ -92,17 +95,17 @@ gulp.task 'watch', ->
 
 port = gutil.env.port || gutil.env.p || DEFAULT_PORT
 
-gulp.task 'connect', ->
+gulp.task 'connect', ['build'], ->
   livereload = require 'combo-livereload'
   app = connect()
     .use livereload
     .use connect.static './src'
   livereload.listen(require('http').createServer(app).listen(port))
 
-gulp.task 'open', ['watch'], ->
+gulp.task 'open', ['connect'], ->
   gulp.src 'src/index.html'
   .pipe open '',
     url: "http://localhost:#{port}/index.html"
 
 gulp.task 'default', ['build']
-gulp.task 'dev', ['connect', 'watch', 'open']
+gulp.task 'dev', ['build', 'connect', 'watch', 'open']
