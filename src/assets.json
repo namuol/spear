@@ -8,10 +8,11 @@
     "displace": "assets/displace.png",
     "person": "assets/person.png",
     "fin": "assets/fin.png",
-    "shark": "assets/shark.png"
+    "shark": "assets/shark.png",
+    "sky": "assets/sky.png"
   },
   "sheets": {
-    "fish": ["assets/fish.png", 21, 7]
+    "fish": ["assets/fish.png", 22, 7]
   },
   "fonts": {
     "font": "assets/font.png"

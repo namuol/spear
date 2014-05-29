@@ -56,9 +56,11 @@ class SpearGame extends cg.Scene
       texture: 'bg'
     @water.width = cg.width
     @water.height = cg.height
-    # @displacement = new cg.gfx.DisplacementFilter(cg.textures.displace)
-    # @water.filters = [@displacement]
+    @displacement = new cg.gfx.DisplacementFilter(cg.textures.displace)
+    @water.filters = [@displacement]
 
+    @sky = @addChild new cg.Actor
+      texture: 'sky'
     @scoreText = @addChild new cg.Text '0',
       font: 'font'
       x: 4
@@ -79,7 +81,7 @@ class SpearGame extends cg.Scene
 
   update: ->
     cg.music.surf.volume = @boat?.turbulence() ? 0
-    # @displacement.offset.x += 0.3
-    # @displacement.offset.y += 0.1
+    @displacement.offset.x += 0.4
+    @displacement.offset.y += 0.1
 
 module.exports = SpearGame

@@ -1,10 +1,24 @@
 cg = require 'cg'
 Splash = require 'Splash'
+Fish = require 'Fish'
 Physical = require 'plugins/physics/Physical'
 
 class Spear extends cg.Actor
   texture: 'spear'
   init: ->
+    @topHalf = @addChild new cg.Actor
+      texture: 'spear'
+      anchor:
+        x: 0.5
+        y: 0.5
+    m = @addChild new cg.gfx.Graphics
+    m.beginFill()
+    m.drawRect 0,0, @width/2, @height
+    m.endFill()
+    m.x = -@width/2
+    m.y = -@height/2
+    @topHalf.mask = m
+
     @anchor.x = 0.5
     @anchor.y = 0.5
     @aiming = true
@@ -42,7 +56,7 @@ class Spear extends cg.Actor
           x: m.x
           y: m.y
         @tween
-          duration: 250
+          duration: 150
           values:
             anchorX: 0.5
             scaleX: 1
@@ -62,12 +76,12 @@ class Spear extends cg.Actor
   update: ->
     @t += cg.dt_seconds
     if @aiming
-      @rotation = @vecTo(@crosshair).angle()
+      @origRotation = @rotation = @vecTo(@crosshair).angle()
       @scale.x = 0.6666 + 0.3333 * Math.abs Math.cos @rotation
       @x = @boat.x + 6
       @y = @boat.y - 15 + @boat.person.y
     else if @floating
-      @rotation = 0.1 * Math.sin @t * 2
+      @rotation = @origRotation + 0.1 * Math.sin @t * 2
       @y = @floatY + 3*Math.cos @t * 2
 
       if @touches @boat
@@ -87,7 +101,7 @@ class Spear extends cg.Actor
         .then ->
           @destroy()
         totScore = 0
-        for fish in @children
+        for fish in @children when fish instanceof Fish
           totScore += fish.score
         if totScore != 0
           mult = @children.length

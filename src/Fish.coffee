@@ -24,7 +24,7 @@ class Fish extends cg.Actor
       @type = cg.rand ODDS
       @texture = cg.sheets.fish[@type]
     @score = SCORE[@type]
-    @rotation = Math.PI/2 + cg.rand(-0.2,0.2)
+    @tween 'rotation', -Math.PI/2 + cg.rand(-0.2,0.2), 500, 'elastic.out'
     @flipX = cg.rand([true, false])
 
   update: ->

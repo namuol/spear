@@ -25,7 +25,7 @@ class Splash extends cg.Actor
           shadow: shadow
 
     for fish,i in fishes
-      fish.x = ((@spear.width*.5)/fishes.length)*i
+      fish.x = ((@spear.width*0.5)/fishes.length)*i
       fish.scaleX = fish.scaleY = 0
       fish.tween
         values:
@@ -35,6 +35,8 @@ class Splash extends cg.Actor
         easeFunc: 'elastic.out'
       fish.delay i*80, -> cg.sounds.whoosh.play()
       @spear.addChild fish
+
+    @spear.children.reverse()
 
 Splash.plugin Physical
 
