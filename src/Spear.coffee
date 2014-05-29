@@ -101,10 +101,11 @@ class Spear extends cg.Actor
         .then ->
           @destroy()
         totScore = 0
+        mult = 0
         for fish in @children when fish instanceof Fish
           totScore += fish.score
+          ++mult
         if totScore != 0
-          mult = @children.length
           cg('#main').score += totScore * mult
 
           cg('#main').addChild(new cg.Text ''+totScore + 'x' + mult,

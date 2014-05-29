@@ -15,6 +15,10 @@ class Shark extends cg.Actor
     @anchorY = 0
     @alpha = 0
     @speed = DEFAULT_SPEED
+    @body.width = 16
+    @body.height = 10
+    @body.offset.x = -@body.width/2
+    @body.offset.y = -@body.height/2
 
   update: ->
     @x = @shadow.x + @shadow.width/2
@@ -38,7 +42,7 @@ class Shark extends cg.Actor
         @animate ['anchorY', 1.01],
           ['anchorY', 0.99]
 
-    if @shadow.touches boat
+    if @touches boat
       cg('#gameOver').splash()
       cg.sounds.dead.play()
       cg.music.surf.fadeTo 0

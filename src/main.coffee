@@ -19,7 +19,7 @@ module.exports = ->
     height: 240
     backgroundColor: 0x303c55
     textureFilter: 'nearest'
-    displayMode: 'pixel'
+    displayMode: 'pixelPerfect'
 
   loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen
   loadingScreen.begin()

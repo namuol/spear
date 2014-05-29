@@ -33,9 +33,10 @@ class Boat extends cg.Actor
 
     @sprite.x = @sprite.width/4
     @sprite.y = @sprite.height/4
-    @body.width = @sprite.width/2
+    @body.width = @sprite.height/2
     @body.height = @sprite.height/2
-    @body.offset.y -= 8
+    @body.offset.x = @body.width/2
+    @body.offset.y = -6
     @t = 0
     @controls = cg.input.controls.boat
 
