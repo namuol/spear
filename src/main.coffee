@@ -47,7 +47,6 @@ module.exports = ->
         cg('#pauseScreen').hide()
 
         pause = ->
-          cg.log 'PAUSE'
           cg.sound.pauseAll()
           cg('#main').pause()
           cg('#gameOver').pause()

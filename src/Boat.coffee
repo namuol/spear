@@ -1,31 +1,41 @@
 cg = require 'cg'
 Physical = require 'plugins/physics/Physical'
+Reflected = require 'Reflected'
 Spear = require 'Spear'
 
 DEFAULT_SPEED = 100
 BASE_TURBULENCE = 0.1
+
 class Boat extends cg.Actor
   @plugin Physical
+  @plugin Reflected
+    x: -8
+    y: -22
+    width: 30
+    height: 24
+    offsetX: -8
+    offsetY: 2
 
   init: ->
     @spearCount = 1
 
-    @shadow = @addChild new cg.Actor
+    @shadow = @addChildAt new cg.Actor(
       texture: 'shadow'
       x: -7
       y: 1
       width: 27
       height: 2
       alpha: 0.4
+    ), 0
 
-    @person = @addChild new cg.Actor
+    @person = @masked.addChild new cg.Actor
       texture: 'person'
       x: 6
       anchor:
         x: 0.5
         y: 1
 
-    @sprite = @addChild new cg.Actor
+    @sprite = @masked.addChild new cg.Actor
       texture: 'boat'
       anchor:
         x: 0.5
@@ -43,17 +53,10 @@ class Boat extends cg.Actor
     @speed = DEFAULT_SPEED
     @targetVelocity = new cg.math.Vector2
     @on 'horiz', (val) ->
-      # @targetDirection.x = val
       @targetVelocity.x = val * @speed
 
     @on 'vert', (val) ->
-      # @targetDirection.y = val * 0.5
       @targetVelocity.y = val * @speed * 0.5
-
-    @person.mask = @sprite.mask = @addChild new cg.gfx.Graphics
-    @sprite.mask.beginFill()
-    @sprite.mask.drawRect(-10,-98,100,100)
-    @sprite.mask.endFill()
 
   turbulence: -> (@body.v.len()/DEFAULT_SPEED) + BASE_TURBULENCE
 
@@ -61,7 +64,7 @@ class Boat extends cg.Actor
     @body.v.$add(@targetVelocity.sub(@body.v).mul(0.02))
     @t += cg.dt_seconds + @turbulence() * 0.1
     @sprite.y = @turbulence() * 3 * Math.sin @t * 2
-    @shadow.alpha = 0.5 + 0.2*Math.sin @t * 2
+    # @shadow.alpha = 0.5 + 0.2*Math.sin @t * 2
     @person.y = @sprite.y + 6 + 1.5*Math.sin (@t-100) * 2
     @sprite.rotation = 0.1 * Math.cos @t * 2
     @person.rotation = -0.2*(@body.v.x/DEFAULT_SPEED) + 0.1 * Math.cos @t * 2.1

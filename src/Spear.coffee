@@ -2,11 +2,25 @@ cg = require 'cg'
 Splash = require 'Splash'
 Fish = require 'Fish'
 Physical = require 'plugins/physics/Physical'
+Reflected = require 'Reflected'
 
 class Spear extends cg.Actor
-  texture: 'spear'
+  @plugin Reflected
+    x: -20
+    y: -22
+    width: 40
+    height: 40
+    offsetX: -20
+    offsetY: 6
+
   init: ->
-    @topHalf = @addChild new cg.Actor
+    @spear = @masked.addChild new cg.Actor
+      texture: 'spear'
+      anchor:
+        x: 0.5
+        y: 0.5
+
+    @topHalf = @spear.addChild new cg.Actor
       texture: 'spear'
       anchor:
         x: 0.5
@@ -19,8 +33,6 @@ class Spear extends cg.Actor
     m.y = -@height/2
     @topHalf.mask = m
 
-    @anchor.x = 0.5
-    @anchor.y = 0.5
     @aiming = true
     @addClass 'spear'
     @crosshair = cg('#crosshair')
@@ -49,6 +61,8 @@ class Spear extends cg.Actor
           x: m.x
           y: m.y
           anchorX: 1
+          'reflection.offsetY': -14
+          'reflection.height': 24
         easeFunc: 'back.in'
       .then ->
         cg('#main').addChild new Splash
@@ -76,12 +90,12 @@ class Spear extends cg.Actor
   update: ->
     @t += cg.dt_seconds
     if @aiming
-      @origRotation = @rotation = @vecTo(@crosshair).angle()
-      @scale.x = 0.6666 + 0.3333 * Math.abs Math.cos @rotation
+      @origRotation = @spear.rotation = @vecTo(@crosshair).angle()
+      @scale.x = 0.6666 + 0.3333 * Math.abs Math.cos @spear.rotation
       @x = @boat.x + 6
       @y = @boat.y - 15 + @boat.person.y
     else if @floating
-      @rotation = @origRotation + 0.1 * Math.sin @t * 2
+      @spear.rotation = @origRotation + 0.1 * Math.sin @t * 2
       @y = @floatY + 3*Math.cos @t * 2
 
       if @touches @boat
@@ -102,7 +116,7 @@ class Spear extends cg.Actor
           @destroy()
         totScore = 0
         mult = 0
-        for fish in @children when fish instanceof Fish
+        for fish in @spear.children when fish instanceof Fish
           totScore += fish.score
           ++mult
         if totScore != 0
