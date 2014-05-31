@@ -20,6 +20,7 @@ module.exports = ->
     backgroundColor: 0x303c55
     textureFilter: 'nearest'
     displayMode: 'pixelPerfect'
+    # forceCanvas: true
 
   loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen
   loadingScreen.begin()

@@ -35,6 +35,14 @@ class Boat extends cg.Actor
         x: 0.5
         y: 1
 
+    @hat = @person.addChild new cg.Actor
+      texture: 'hat'
+      anchor:
+        x: 0.5
+        y: 0
+      x: 0
+      y: -@person.height - 1
+
     @sprite = @masked.addChild new cg.Actor
       texture: 'boat'
       anchor:
@@ -64,7 +72,7 @@ class Boat extends cg.Actor
     @body.v.$add(@targetVelocity.sub(@body.v).mul(0.02))
     @t += cg.dt_seconds + @turbulence() * 0.1
     @sprite.y = @turbulence() * 3 * Math.sin @t * 2
-    # @shadow.alpha = 0.5 + 0.2*Math.sin @t * 2
+    @shadow.alpha = 0.5 + 0.2*Math.sin @t * 2
     @person.y = @sprite.y + 6 + 1.5*Math.sin (@t-100) * 2
     @sprite.rotation = 0.1 * Math.cos @t * 2
     @person.rotation = -0.2*(@body.v.x/DEFAULT_SPEED) + 0.1 * Math.cos @t * 2.1
@@ -72,5 +80,6 @@ class Boat extends cg.Actor
       @person.flipX = true
     else
       @person.flipX = false
+    @hat.y = -@person.height - 1 - 1*Math.sin (@t-200) * 2
 
 module.exports = Boat

@@ -9,7 +9,8 @@
     "person": "assets/person.png",
     "fin": "assets/fin.png",
     "shark": "assets/shark.png",
-    "sky": "assets/sky.png"
+    "sky": "assets/sky.png",
+    "hat": "assets/hat.png"
   },
   "sheets": {
     "fish": ["assets/fish.png", 22, 7]
