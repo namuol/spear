@@ -74,7 +74,7 @@ class SpearGame extends cg.Scene
     @crosshair = @addChild new Crosshair
       id: 'crosshair'
 
-    cg.music.surf.stop().loop()
+    cg.music.surf.stop().loop().volume = 0.2
 
     return @
 
