@@ -1,4 +1,4 @@
-cg = require 'cg'
+cg = require 'combo'
 Splash = require 'Splash'
 Fish = require 'Fish'
 Physical = require 'plugins/physics/Physical'

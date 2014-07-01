@@ -1,73 +1,75 @@
-cg = require 'cg'
-require 'index'
-
+cg = require 'combo'
+extras = require 'extras'
 UI = require 'plugins/ui/UI'
 Physics = require 'plugins/physics/Physics'
 SpearGame = require 'SpearGame'
-GameOver = require 'GameOver'
 assets = require 'assets.json'
+TitleScreen = require 'TitleScreen'
 
-module.exports = ->
-  # App-wide plugins need to be loaded before `cg.init` is called:
-  cg.plugin UI
-  cg.plugin Physics
+# App-wide plugins need to be loaded before `cg.init` is called:
+cg.plugin UI
+cg.plugin Physics
 
-  # This will set up graphics, sound, input, data, plugins, and start our game loop:
-  cg.init
-    name: 'Spear Game'
-    width: 400
-    height: 240
-    backgroundColor: 0x303c55
-    textureFilter: 'nearest'
-    displayMode: 'pixelPerfect'
-    # forceCanvas: true
+cg.plugin
+  update: ->
+    cg('#main')?.displacement?.offset.x += 0.4
+    cg('#main')?.displacement?.offset.y += 0.1
 
-  loadingScreen = cg.stage.addChild new cg.extras.LoadingScreen
-  loadingScreen.begin()
-  cg.assets.preload assets,
-    error: (src) ->
-      cg.error 'Failed to load asset ' + src
-    progress: (src, data, loaded, count) ->
-      cg.log "Loaded '#{src}'"
-      loadingScreen.setProgress loaded/count
-    complete: ->
-      loadingScreen.complete().then ->
-        loadingScreen.destroy()
-        cg.stage.addChild new SpearGame
-          id: 'main'
-          interactive: true
-          buttonMode: true
-          defaultCursor: 'none'
+# This will set up graphics, sound, input, data, plugins, and start our game loop:
+cg.init
+  name: 'Spear Game'
+  width: 400
+  height: 240
+  backgroundColor: 0x303c55
+  textureFilter: 'nearest'
+  displayMode: 'pixelPerfect'
 
-        gameOver = cg.stage.addChild new GameOver
-          id: 'gameOver'
-        gameOver.pause().hide()
 
-        cg.stage.addChild new cg.extras.PauseScreen
-          id: 'pauseScreen'
-        cg('#pauseScreen').hide()
+loadingScreen = cg.stage.addChild new extras.LoadingScreen
+loadingScreen.begin()
 
-        pause = ->
-          cg.sound.pauseAll()
-          cg('#main').pause()
-          cg('#gameOver').pause()
-          cg('#pauseScreen').show()
+cg.load assets, (src, data, loaded, count) ->
+    cg.log "Loaded '#{src}'"
+    loadingScreen.setProgress loaded/count
+.then ->
+  loadingScreen.complete()
+.then ->
+  loadingScreen.destroy()
+  cg.stage.addChild new SpearGame
+    id: 'main'
+    interactive: true
+    buttonMode: true
+    defaultCursor: 'none'
 
-        cg.on 'blur', pause
+  gameOver = cg.stage.addChild new TitleScreen
+    id: 'gameOver'
+  # gameOver.pause().hide()
 
-        cg('#pauseScreen').on 'dismiss', ->
-          if cg('#gameOver').visible
-            cg('#gameOver').resume()
-          else
-            cg('#main').resume()
-          cg.sound.resumeAll()
+  cg.stage.addChild new extras.PauseScreen
+    id: 'pauseScreen'
+  cg('#pauseScreen').hide()
 
-        pause()
+  pause = ->
+    cg.sound.pauseAll()
+    cg('#main').pause()
+    cg('#gameOver').pause()
+    cg('#pauseScreen').show()
 
-  # Hide the pre-pre loading "Please Wait..." message:
-  document.getElementById('pleasewait').style.display = 'none'
+  cg.on 'blur', pause
 
-  # Show our game container:
-  document.getElementById('combo-game').style.display = 'inherit'
+  cg('#pauseScreen').on 'dismiss', ->
+    if cg('#gameOver').visible
+      cg('#gameOver').resume()
+    else
+      cg('#main').resume()
+    cg.sound.resumeAll()
 
-module.exports()
+  gameOver.splash()
+
+  pause()
+
+# Hide the pre-pre loading "Please Wait..." message:
+document.getElementById('pleasewait').style.display = 'none'
+
+# Show our game container:
+document.getElementById('combo-game').style.display = 'inherit'

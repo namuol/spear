@@ -1,4 +1,4 @@
-cg = require 'cg'
+cg = require 'combo'
 Spear = require 'Spear'
 Boat = require 'Boat'
 Shadow = require 'Shadow'
@@ -49,7 +49,6 @@ class SpearGame extends cg.Scene
     for c in @children
       c.destroy()
 
-
     @targetFishCount = 40
     @water = @addChild new cg.Actor
       id: 'water'
@@ -81,7 +80,5 @@ class SpearGame extends cg.Scene
 
   update: ->
     cg.music.surf.volume = @boat?.turbulence() ? 0
-    @displacement.offset.x += 0.4
-    @displacement.offset.y += 0.1
 
 module.exports = SpearGame

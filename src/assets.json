@@ -10,7 +10,8 @@
     "fin": "assets/fin.png",
     "shark": "assets/shark.png",
     "sky": "assets/sky.png",
-    "hat": "assets/hat.png"
+    "hat": "assets/hat.png",
+    "title": "assets/title.png"
   },
   "sheets": {
     "fish": ["assets/fish.png", 22, 7]

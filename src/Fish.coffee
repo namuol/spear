@@ -1,4 +1,4 @@
-cg = require 'cg'
+cg = require 'combo'
 
 SCORE = [
   100  # bronze

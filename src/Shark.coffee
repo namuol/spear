@@ -1,4 +1,4 @@
-cg = require 'cg'
+cg = require 'combo'
 Physical = require 'plugins/physics/Physical'
 
 STALK_DIST = 100

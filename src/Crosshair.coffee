@@ -1,4 +1,4 @@
-cg = require 'cg'
+cg = require 'combo'
 
 class Crosshair extends cg.Actor
   init: ->

@@ -55,9 +55,9 @@ bundle = (b, debug=false) ->
   .on 'error', handleErrors
   .pipe exorcist path.join __dirname, 'src/main-built.js.map'
   .pipe source 'main-built.js'
-  .pipe gulpif !debug, streamify uglify
-    inSourceMap: path.join __dirname, 'src/main-built.js.map'
-    outSourceMap: path.join __dirname, 'src/main-built.js.map'
+  # .pipe gulpif !debug, streamify uglify
+  #   inSourceMap: path.join __dirname, 'src/main-built.js.map'
+  #   outSourceMap: path.join __dirname, 'src/main-built.js.map'
   .pipe gulp.dest './src/'
 
 createBundler = (_browserify) ->
